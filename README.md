@@ -1,3 +1,4 @@
+```markdown
 # 🧠 Sentiment Analysis Flask App [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Hk4JXwBJHod5Nu3jI3KW1tr22HRBXce0?usp=sharing)
 
 A **Flask-based web application** that performs real-time sentiment analysis on product reviews using:
@@ -8,17 +9,26 @@ A **Flask-based web application** that performs real-time sentiment analysis on 
 
 ---
 
-## 📂 Project Structure
+## 📸 Preview
 
+| Light Mode                               | Dark Mode                              |
+| ---------------------------------------- | -------------------------------------- |
+| ![Light Mode](Preview/preview-light.png) | ![Dark Mode](Preview/preview-dark.png) |
+
+---
+
+## 📂 Project Structure
 ```
+
 Sentiment-api/
-├── app.py                  # Main Flask server
-├── logistic_model.pkl     # Pre-trained sentiment classification model
+├── app.py # Main Flask server
+├── logistic_model.pkl # Pre-trained sentiment classification model
 ├── templates/
-│   └── index.html         # Web UI with Bootstrap, dark-mode toggle, and spinner
-├── requirements.txt       # Python dependencies
-└── .gitignore             # Ignore virtual environments, cache, PKL, etc.
-```
+│ └── index.html # Web UI with Bootstrap, dark-mode toggle, and spinner
+├── requirements.txt # Python dependencies
+└── .gitignore # Ignore virtual environments, cache, PKL, etc.
+
+````
 
 ---
 
@@ -29,7 +39,7 @@ Sentiment-api/
 ```bash
 git clone https://github.com/Surfing-Cipher/Sentiment_Analysis.git
 cd Sentiment_Analysis
-```
+````
 
 ### 2. Configure environment (Python 3.8+ recommended)
 
@@ -53,72 +63,21 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser to access the UI.
+Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
 ---
 
 ## 🎯 Features
 
-- **Real-time sentiment analysis** using pretrained Logistic Regression + embeddings
-- **Responsive Bootstrap UI** with clean card-style layout
-- Switch between **light/dark modes** for eye comfort
-- **Loading spinner** for instant feedback during prediction
-- Pastel background gradient for better readability
-- Error handling and user-friendly messages
-
----
-
-## 🛠️ File Descriptions
-
-- **app.py** – Defines `/` route for the UI and `/predict` route for API
-- **logistic_model.pkl** – Trained sklearn model for sentiment (+ model version handling)
-- **index.html** – Web interface with toggle and spinner
-- **requirements.txt** – Python dependencies (`Flask`, `sentence-transformers`, `scikit-learn`, `gunicorn`, etc.)
-
----
-
-## 🔧 Deployment
-
-To deploy (e.g. on Render.com):
-
-1. Include `requirements.txt`
-2. Use `gunicorn` in your start command:
-
-```bash
-gunicorn app:app
-```
-
-3. Set environment variables if needed, push to GitHub, and connect repo to Render.
-
----
-
-## 👍 Next Enhancements
-
-- Add **confidence scores** from `model.predict_proba`
-- Save user feedback via a simple CSV or Google Sheets integration
-- Add deployment badges (CI/CD, code coverage)
-- Tweak **README** to include app screenshots (light/dark mode)
-
----
-
-## 📝 Example Usage
-
-![Light Mode Example](screenshots/light_mode.png)
-![Dark Mode Example](screenshots/dark_mode.png)
-
-```html
-<button onclick="analyze()">Analyze Sentiment</button>
-```
-
-Yields:
-
-```
-Sentiment: Positive ✅
-```
+- **Real-time sentiment analysis**
+- **Responsive Bootstrap UI**
+- **Light/dark mode toggle**
+- **Loading spinner for prediction**
+- Clean layout and improved readability
 
 ---
 
 ## 🤝 Contributing
 
-- Feel free to open issues or PRs if you encounter bugs or want feature suggestions
-- Please follow the existing **Bootstrap UI style** and **dark mode conventions**
+- Open issues or PRs for bugs/features
+- Follow existing UI/UX conventions
