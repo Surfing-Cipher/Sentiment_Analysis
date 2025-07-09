@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sentiment Predictor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        transition: background 0.3s ease;
+      }
+
+      .card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .dark-mode {
+        background: #121212 !important;
+        color: #e0e0e0;
+      }
+
+      .dark-mode .card {
+        background: #1e1e1e;
+        color: #e0e0e0;
+      }
+
+      .dark-mode .form-control {
+        background-color: #2c2c2c;
+        color: #e0e0e0;
+        border-color: #444;
+      }
+
+      .dark-mode .btn-primary {
+        background-color: #0d6efd;
+      }
+
+      .toggle-switch {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+      }
+
+      .spinner-border {
+        width: 1.5rem;
+        height: 1.5rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="background: linear-gradient(135deg, #e3f2fd, #ffffff)">
+    <div class="toggle-switch">
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="darkModeSwitch"
+          onchange="toggleDarkMode()"
+        />
+        <label class="form-check-label" for="darkModeSwitch"
+          >🌙 Dark Mode</label
+        >
+      </div>
+    </div>
+
+    <div class="card p-5" style="max-width: 650px; width: 100%">
+      <h2 class="mb-3 text-primary">🧠 Sentiment Predictor</h2>
+      <p id="description" class="mb-4">
+        Paste your product review below and click <strong>Analyze</strong> to
+        detect the sentiment.
+      </p>
+
+      <textarea
+        id="review"
+        class="form-control mb-3"
+        rows="5"
+        placeholder="e.g., I love this product, it's very helpful!"
+      ></textarea>
+
+      <button
+        class="btn btn-primary w-100 d-flex justify-content-center align-items-center"
+        onclick="analyze()"
+        id="analyzeBtn"
+      >
+        <span id="btnText">Analyze Sentiment</span>
+        <div
+          class="spinner-border text-light ms-2"
+          id="spinner"
+          role="status"
+        ></div>
+      </button>
+
+      <div id="result" class="mt-4"></div>
+    </div>
+
+    <script>
+      function toggleDarkMode() {
+        const isDark = document.body.classList.toggle("dark-mode");
+        document.body.style.background = isDark
+          ? "#121212"
+          : "linear-gradient(135deg, #e3f2fd, #ffffff)";
+        // Change description color
+        const desc = document.getElementById("description");
+        desc.style.color = isDark ? "#ccc" : "#6c757d"; // light gray in dark, muted gray in light
+        // Change button text color
+        const btnText = document.getElementById("btnText");
+      }
+
+      async function analyze() {
+        const review = document.getElementById("review").value.trim();
+        const resultDiv = document.getElementById("result");
+        const spinner = document.getElementById("spinner");
+        const btnText = document.getElementById("btnText");
+
+        resultDiv.innerHTML = "";
+        if (!review) {
+          resultDiv.innerHTML = `<div class="alert alert-warning">⚠️ Please enter a review before analyzing.</div>`;
+          return;
+        }
+
+        // Show spinner
+        spinner.style.display = "inline-block";
+        btnText.textContent = "Analyzing...";
+
+        try {
+          const response = await fetch("/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ review }),
+          });
+
+          if (!response.ok)
+            throw new Error("Server returned status " + response.status);
+
+          const data = await response.json();
+          const colorClass = data.label === 1 ? "success" : "danger";
+
+          resultDiv.innerHTML = `
+          <div class="alert alert-${colorClass}" role="alert">
+            <strong>Sentiment:</strong> ${data.prediction}
+          </div>
+        `;
+        } catch (err) {
+          console.error(err);
+          resultDiv.innerHTML = `<div class="alert alert-danger">❌ Error: ${err.message}</div>`;
+        } finally {
+          spinner.style.display = "none";
+          btnText.textContent = "Analyze Sentiment";
+        }
+      }
+    </script>
+  </body>
+</html>
