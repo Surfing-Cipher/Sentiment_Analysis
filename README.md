@@ -1,8 +1,4 @@
-Here’s an improved, polished **README** for your GitHub repo, with an overview and clear instructions for setup and usage.
-
----
-
-# 🧠 Sentiment Analysis Flask App
+# 🧠 Sentiment Analysis Flask App [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Hk4JXwBJHod5Nu3jI3KW1tr22HRBXce0?usp=sharing)
 
 A **Flask-based web application** that performs real-time sentiment analysis on product reviews using:
 
